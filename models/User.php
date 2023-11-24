@@ -58,15 +58,13 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
 
-        return null;
+         $connection = Yii::$app->db;
+
+         $sql = $connection->createCommand("SELECT * FROM user WHERE username = '" . $username . "'");
+
+         $result = $command->queryAll();
     }
-
     /**
      * {@inheritdoc}
      */
